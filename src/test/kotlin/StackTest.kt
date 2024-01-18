@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import stack.Stack
 import stack.UnderflowException
+import kotlin.test.assertEquals
 import kotlin.test.assertSame
 
 class StackTest {
@@ -40,5 +41,31 @@ class StackTest {
         assertThrows<UnderflowException> {
             stack.pop()
         }
+    }
+
+    @Test
+    fun XをpushしたらXをpopする() {
+        stack.push(99)
+        assertSame(99, stack.pop())
+        stack.push(88)
+        assertSame(88, stack.pop())
+    }
+
+    @Test
+    fun X_Yの順番でpushしたらY_Xの順番でpopする() {
+        stack.push(99)
+        stack.push(88)
+        assertSame(88, stack.pop())
+        assertSame(99, stack.pop())
+    }
+
+    @Test
+    fun X_Y_Zの順番でpushしたらZ_Y_Xの順番でpopする() {
+        stack.push(111)
+        stack.push(99)
+        stack.push(88)
+        assertSame(88, stack.pop())
+        assertSame(99, stack.pop())
+        assertSame(111, stack.pop())
     }
 }
